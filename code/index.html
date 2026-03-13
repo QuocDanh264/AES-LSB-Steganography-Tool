@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AES With LSB - Ứng dụng Mã hóa & Giấu tin</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-lock-open"></i> AES WITH LSB</h1>
+            <p class="subtitle">Ứng dụng Mã hóa & Giấu tin trong ảnh</p>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-button active" id="tabEncryptBtn">
+                <i class="fas fa-file-invoice"></i> Giấu tin & Mã hóa
+            </button>
+            <button class="tab-button" id="tabDecryptBtn">
+                <i class="fas fa-unlock"></i> Giải mã
+            </button>
+            <button class="tab-button" id="tabCompareBtn">
+                <i class="fas fa-chart-bar"></i> So Sánh Ảnh
+            </button>
+        </div>
+
+        <div id="encrypt" class="tab-content active">
+            <h3><i class="fas fa-image"></i> Nhập thông tin và mã hóa khóa bí mật</h3>
+
+            <div class="input-group file-upload-group">
+                <div id="encryptUploadArea">
+                    <label for="imageInput">
+                        <div class="dropzone">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Kéo & thả ảnh vào đây hoặc <span>click để chọn ảnh gốc</span></p>
+                            <input type="file" id="imageInput" accept="image/*" class="hidden-file-input">
+                        </div>
+                    </label>
+                    <span id="fileNameDisplay" class="file-name-display">Chưa chọn ảnh nào</span>
+                </div>
+            </div>
+            <img id="previewImage" class="image-preview" src="" alt="Ảnh gốc" style="display: none;">
+
+            <div class="input-group">
+                <label for="secretMessage"><i class="fas fa-envelope-open-text"></i> Thông tin cần giấu:</label>
+                <textarea id="secretMessage" placeholder="Nhập nội dung cần giấu..." rows="4"></textarea>
+            </div>
+
+            <div class="input-group">
+                <label for="encryptionKey"><i class="fas fa-key"></i> Khóa bí mật (dùng để mã hóa thông tin):</label>
+                <input type="password" id="encryptionKey" autocomplete="off" placeholder="Nhập khóa bí mật hoặc dán khóa đã mã hóa...">
+            </div>
+
+            <details class="advanced-options">
+                <summary><i class="fas fa-lock"></i> Tùy chọn: Mã hóa khóa bí mật bằng mật khẩu khác</summary>
+                <div class="details-content">
+                    <div class="input-group">
+                        <label for="secretPassword"><i class="fas fa-shield-alt"></i> Mật khẩu để mã hóa khóa bí mật:</label>
+                        <div class="password-input-group">
+                            <input type="password" id="secretPassword" autocomplete="off" placeholder="Nhập mật khẩu...">
+                            <button type="button" class="toggle-password" onclick="togglePasswordVisibility('secretPassword')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="button-group">
+                        <button class="small-button" id="encryptSecretKeyBtn"><i class="fas fa-lock"></i> Mã hóa khóa bí mật</button>
+                        <button class="small-button copy-button" id="copyEncryptedKeyBtn"><i class="fas fa-copy"></i> Sao chép khóa đã mã hóa</button>
+                    </div>
+                    <textarea id="encryptedKeyOutput" placeholder="Khóa đã mã hóa sẽ hiển thị ở đây..." readonly rows="2"></textarea>
+                </div>
+            </details>
+
+            <button class="main-button" id="encryptAndEmbedBtn"><i class="fas fa-arrow-circle-down"></i> Mã hóa & Giấu vào ảnh</button>
+
+            <div class="result-area" id="encryptResultArea" style="display: none;">
+                <a id="downloadLink" class="download-link" download="encoded-image.png">
+                    <i class="fas fa-download"></i> Tải ảnh đã mã hóa
+                </a>
+                <canvas id="canvas" style="display: none;"></canvas>
+                <img id="encodedImage" class="image-preview" src="" alt="Ảnh đã mã hóa">
+                <p class="result-message">Quá trình mã hóa hoàn tất!</p>
+            </div>
+        </div>
+
+        <div id="decrypt" class="tab-content">
+            <h3><i class="fas fa-image"></i> Giải mã thông tin từ ảnh</h3>
+
+            <div class="input-group file-upload-group">
+                <div id="decryptUploadArea">
+                    <label for="encodedInput">
+                        <div class="dropzone">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Kéo & thả ảnh vào đây hoặc <span>click để chọn ảnh đã chứa thông tin</span></p>
+                            <input type="file" id="encodedInput" class="hidden-file-input">
+                        </div>
+                    </label>
+                    <span id="encodedFileNameDisplay" class="file-name-display">Chưa chọn ảnh nào</span>
+                </div>
+            </div>
+            <img id="decryptPreviewImage" class="image-preview" src="" alt="Ảnh đã mã hóa" style="display: none;">
+            <div class="input-group">
+                <label for="decryptionKey"><i class="fas fa-key"></i> Khóa bí mật (hoặc chuỗi AES đã mã hóa):</label>
+                <input type="password" id="decryptionKey" autocomplete="off" placeholder="Nhập khóa bí mật hoặc dán chuỗi mã hóa...">
+            </div>
+
+            <details class="advanced-options">
+                <summary><i class="fas fa-question-circle"></i> Có dùng mật khẩu để giải mã khóa?</summary>
+                <div class="details-content">
+                    <div class="input-group">
+                        <label for="decryptionPassword"><i class="fas fa-unlock-alt"></i> Mật khẩu để giải mã khóa bí mật:</label>
+                        <div class="password-input-group">
+                            <input type="password" id="decryptionPassword" autocomplete="off" placeholder="Nhập mật khẩu nếu khóa là chuỗi mã hóa...">
+                            <button type="button" class="toggle-password" onclick="togglePasswordVisibility('decryptionPassword')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </details>
+            <button class="main-button" id="handleDecodeBtn"><i class="fas fa-unlock"></i> Giải mã</button>
+        </div>
+
+        <div id="compare" class="tab-content">
+            <h3><i class="fas fa-compress-alt"></i> So sánh ảnh gốc và ảnh đã mã hóa</h3>
+            <div id="compareUploadSections">
+                <div class="input-group file-upload-group">
+                    <div id="originalCompareUploadArea">
+                        <label for="originalInput">
+                            <div class="dropzone">
+                                <i class="fas fa-file-image"></i>
+                                <p>Kéo & thả ảnh vào đây hoặc <span>click để chọn ảnh gốc</span></p>
+                                <input type="file" id="originalInput" accept="image/*" class="hidden-file-input">
+                            </div>
+                        </label>
+                        <span id="originalFileNameDisplay" class="file-name-display">Chưa chọn ảnh gốc nào</span>
+                    </div>
+                </div>
+                <img id="originalImagePreviewCompare" class="image-preview" src="" alt="Ảnh gốc" style="display: none;">
+
+                <div class="input-group file-upload-group">
+                    <div id="encodedCompareUploadArea">
+                        <label for="encodedInputCompare">
+                            <div class="dropzone">
+                                <i class="fas fa-file-image"></i>
+                                <p>Kéo & thả ảnh vào đây hoặc <span>click để chọn ảnh đã mã hóa</span></p>
+                                <input type="file" id="encodedInputCompare" accept="image/*" class="hidden-file-input">
+                            </div>
+                        </label>
+                        <span id="encodedCompareFileNameDisplay" class="file-name-display">Chưa chọn ảnh mã hóa nào</span>
+                    </div>
+                </div>
+                <img id="encodedImagePreviewCompare" class="image-preview" src="" alt="Ảnh mã hóa" style="display: none;">
+            </div>
+
+            <button class="main-button" id="compareImagesBtn">
+                <i class="fas fa-chart-line"></i> So Sánh Ảnh
+            </button>
+
+            <div class="result-area" id="compareResultArea" style="display: none;">
+                <div id="stats" class="stat-box-summary">
+                    <h4><i class="fas fa-info-circle"></i> Kết quả so sánh tổng quát:</h4>
+                    <p><strong>MSE:</strong> <span id="mseResult">N/A</span></p>
+                    <p><strong>PSNR:</strong> <span id="psnrResult">N/A</span></p>
+                    <p><strong>SSIM:</strong> <span id="ssimResult">N/A</span></p>
+                    <p id="compareComment"></p>
+                </div>
+
+                <div class="image-compare-row" id="imagesRow">
+                    <div class="image-column">
+                        <h3>Ảnh gốc</h3>
+                        <img id="originalImageDisplay" class="compare-image" alt="Ảnh gốc" />
+                        <div id="originalStats" class="stat-box"></div>
+                    </div>
+                    <div class="image-column">
+                        <h3>Ảnh mã hóa</h3>
+                        <img id="encodedImageDisplay" class="compare-image" alt="Ảnh mã hóa" />
+                        <div id="encodedStats" class="stat-box"></div>
+                    </div>
+                </div>
+
+                <div class="analysis-canvases" id="chartsRow">
+                    <div class="canvas-column">
+                        <h4>Ảnh khác biệt</h4>
+                        <canvas id="differenceCanvas" width="300" height="300"></canvas>
+                        <p class="canvas-description">Ảnh chênh lệch giữa ảnh gốc và ảnh mã hóa</p>
+                    </div>
+                    <div class="canvas-column">
+                        <h4>Histogram</h4>
+                        <canvas id="histogramCanvas" width="300" height="300"></canvas>
+                        <p class="canvas-description">Biểu đồ histogram thể hiện mức độ chênh lệch pixel</p>
+                    </div>
+                    <div class="canvas-column">
+                        <h4>Heatmap</h4>
+                        <canvas id="heatmapCanvas" width="300" height="300"></canvas>
+                        <p class="canvas-description">Bản đồ nhiệt thể hiện vùng bị ảnh hưởng</p>
+                    </div>
+                </div>
+                <button class="main-button secondary-button" id="compareNewImagesBtn" style="margin-top: 20px; display: none;">
+                    <i class="fas fa-redo"></i> So sánh ảnh khác
+                </button>
+            </div>
+        </div>
+    </div> <script src="script.js"></script>
+</body>
+</html>

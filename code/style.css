@@ -1,0 +1,604 @@
+/* Google Fonts - Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+    /* New Color Palette */
+    --primary-color: #36a49c; /* Xanh lá cây tươi hơn */
+    --primary-light: #5dc9c0; /* Xanh lá cây rất nhạt */
+    --secondary-color: #4CAF50; /* Xanh lá cây phụ (có thể dùng cho các icon, đường viền) */
+    --accent-color: #2196F3; /* Xanh dương nhẹ nhàng cho điểm nhấn */
+    --text-dark: #3a3a3a; /* Xám đen ấm */
+    --text-light: #7c7c7c; /* Xám nhạt hơn */
+    --bg-light: #f5f8fa; /* Nền sáng, hơi xanh xám */
+    --bg-white: #ffffff;
+    --border-color: #e0e0e0;
+    --shadow-light: rgba(0, 0, 0, 0.06);
+    --shadow-medium: rgba(0, 0, 0, 0.1);
+    --shadow-strong: rgba(0, 0, 0, 0.15);
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    background: var(--bg-light);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 30px; /* Tăng padding */
+    color: var(--text-dark);
+    box-sizing: border-box;
+}
+
+.container {
+    max-width: 800px; /* Tăng chiều rộng tổng thể */
+    background: var(--bg-white);
+    padding: 40px; /* Tăng padding */
+    border-radius: 25px; /* Bo tròn góc hơn */
+    box-shadow: 0 15px 30px var(--shadow-strong); /* Đổ bóng mạnh hơn */
+    width: 100%;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 40px; /* Tăng khoảng cách */
+}
+
+h1 {
+    font-size: 2.5rem; /* Tăng size */
+    color: var(--primary-color);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+h1 .fas {
+    font-size: 2.1rem; /* Tăng size icon */
+    color: var(--accent-color);
+}
+
+.subtitle {
+    font-size: 1.05rem; /* Tăng size */
+    color: var(--text-light);
+    margin-top: 0;
+}
+
+h2, h3 {
+    text-align: center;
+    color: var(--primary-color);
+    margin-bottom: 30px; /* Tăng khoảng cách */
+    font-weight: 600;
+    font-size: 1.6rem; /* Tăng size */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+h2 .fas, h3 .fas {
+    font-size: 1.5rem; /* Tăng size icon */
+    color: var(--accent-color);
+}
+
+.tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px; /* Tăng khoảng cách */
+    background-color: var(--bg-light);
+    border-radius: 18px; /* Bo tròn góc hơn */
+    padding: 10px;
+    box-shadow: inset 0 2px 5px var(--shadow-light);
+}
+
+.tab-button {
+    flex: 1;
+    padding: 14px 20px; /* Tăng padding */
+    border: none;
+    cursor: pointer;
+    background: transparent;
+    color: var(--text-dark);
+    font-weight: 500;
+    font-size: 1.05rem; /* Tăng size */
+    border-radius: 15px; /* Bo tròn góc hơn */
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.tab-button:hover {
+    background: #eef4f7;
+}
+
+.tab-button.active {
+    background: var(--primary-color);
+    color: white;
+    box-shadow: 0 4px 12px var(--shadow-medium);
+}
+
+.tab-button .fas {
+    font-size: 1.1rem; /* Tăng size icon */
+}
+
+.tab-content {
+    display: none;
+    background: var(--bg-white);
+    padding: 30px; /* Tăng padding */
+    border-radius: 20px; /* Bo tròn góc hơn */
+    box-shadow: 0 8px 20px var(--shadow-medium);
+    margin-bottom: 25px; /* Tăng khoảng cách */
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.input-group {
+    margin-bottom: 25px; /* Tăng khoảng cách */
+}
+
+label {
+    display: block;
+    margin-bottom: 10px; /* Tăng khoảng cách */
+    font-weight: 500;
+    color: var(--text-dark);
+    font-size: 1rem; /* Tăng size */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+label .fas {
+    color: var(--primary-color);
+    font-size: 1.1rem; /* Tăng size icon */
+}
+
+textarea,
+input[type="text"],
+input[type="password"] {
+    width: calc(100% - 24px); /* Trừ padding và border */
+    padding: 14px; /* Tăng padding */
+    border-radius: 12px; /* Bo tròn góc hơn */
+    border: 1px solid var(--border-color);
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem; /* Tăng size */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+textarea:focus,
+input[type="text"]:focus,
+input[type="password"]:focus {
+    border-color: var(--accent-color); /* Thay bằng accent-color */
+    box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.2); /* Đổ bóng phù hợp với accent-color */
+    outline: none;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 100px; /* Tăng min-height */
+}
+
+/* File Upload Custom Style */
+.file-upload-group label {
+    display: block;
+    width: 100%;
+}
+.dropzone {
+    border: 2px dashed var(--primary-light); /* Màu border là primary-light */
+    border-radius: 15px; /* Bo tròn góc hơn */
+    padding: 40px 25px; /* Tăng padding */
+    text-align: center;
+    cursor: pointer;
+    background-color: #fcfdfe; /* Nền trắng tinh khiết hơn */
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 8px var(--shadow-light); /* Đổ bóng nhẹ */
+}
+
+.dropzone:hover {
+    background-color: #f0f8ff; /* Hơi xanh khi hover */
+    border-color: var(--accent-color); /* Accent color khi hover */
+    box-shadow: 0 4px 12px var(--shadow-medium);
+}
+
+.dropzone .fas {
+    font-size: 3.5rem; /* Tăng size icon */
+    color: var(--primary-color);
+    margin-bottom: 15px; /* Tăng khoảng cách */
+}
+
+.dropzone p {
+    margin: 0;
+    color: var(--text-light);
+    font-size: 1rem; /* Tăng size */
+}
+
+.dropzone p span {
+    color: var(--accent-color);
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+.hidden-file-input {
+    display: none;
+}
+
+.file-name-display {
+    display: block;
+    margin-top: 15px; /* Tăng khoảng cách */
+    font-size: 0.95rem; /* Tăng size */
+    color: var(--text-light);
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background: var(--bg-light);
+    padding: 8px 15px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+}
+
+
+/* Buttons */
+.main-button {
+    width: 100%;
+    padding: 18px 30px; /* Tăng padding */
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 15px; /* Bo tròn góc hơn */
+    margin-top: 30px; /* Tăng khoảng cách */
+    cursor: pointer;
+    font-size: 1.2rem; /* Tăng size */
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    letter-spacing: 0.5px;
+}
+
+.main-button:hover {
+    background: var(--primary-light);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 18px var(--shadow-medium);
+}
+
+.main-button:active {
+    transform: translateY(0);
+    box-shadow: 0 3px 8px var(--shadow-light);
+}
+
+.main-button .fas {
+    font-size: 1.3rem; /* Tăng size icon */
+}
+
+.button-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 15px;
+    justify-content: flex-start;
+}
+
+.small-button {
+    padding: 12px 18px; /* Tăng padding */
+    background: var(--accent-color); /* Màu xanh dương cho nút nhỏ */
+    color: white;
+    border: none;
+    border-radius: 10px; /* Bo tròn góc hơn */
+    cursor: pointer;
+    font-size: 0.95rem; /* Tăng size */
+    font-weight: 500;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.small-button:hover {
+    background: #42a5f5; /* Sáng hơn khi hover */
+    transform: translateY(-1px);
+}
+.small-button.copy-button {
+    background: #607d8b; /* Xám xanh cho nút copy */
+}
+.small-button.copy-button:hover {
+    background: #78909c;
+}
+
+
+/* Details / Accordion */
+.advanced-options {
+    margin-top: 25px; /* Tăng khoảng cách */
+    background: var(--bg-light);
+    border-radius: 18px; /* Bo tròn góc hơn */
+    padding: 20px 25px; /* Tăng padding */
+    border: 1px solid var(--border-color);
+    box-shadow: inset 0 1px 4px var(--shadow-light);
+}
+
+.advanced-options summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--primary-color);
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 12px; /* Tăng khoảng cách */
+    font-size: 1.05rem; /* Tăng size */
+}
+.advanced-options summary::before {
+    content: '\f054'; /* Font Awesome chevron-right icon */
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    margin-right: 8px;
+    transition: transform 0.2s ease;
+    color: var(--accent-color); /* Màu xanh dương cho mũi tên */
+}
+.advanced-options[open] summary::before {
+    transform: rotate(90deg);
+}
+.advanced-options summary .fas {
+    color: var(--accent-color);
+    font-size: 1.1rem; /* Tăng size icon */
+}
+
+.details-content {
+    padding-top: 20px; /* Tăng padding */
+}
+
+.details-content .input-group {
+    margin-bottom: 20px;
+}
+
+.details-content textarea {
+    margin-top: 8px;
+}
+
+
+/* Image Preview & Download Link */
+.image-preview {
+    max-width: 100%;
+    max-height: 400px; /* Tăng chiều cao tối đa */
+    object-fit: contain;
+    margin-top: 25px; /* Tăng khoảng cách */
+    border: 1px solid var(--border-color);
+    border-radius: 15px; /* Bo tròn góc hơn */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 4px 10px var(--shadow-light);
+}
+
+.result-area {
+    margin-top: 30px;
+    text-align: center;
+    padding: 25px;
+    background-color: var(--bg-light);
+    border-radius: 18px; /* Bo tròn góc hơn */
+    border: 2px dashed var(--primary-light); /* Dùng màu primary-light cho border dashed */
+    box-shadow: 0 6px 15px var(--shadow-light);
+    display: none; /* Mặc định ẩn, sẽ hiển thị bằng JS */
+}
+.result-message {
+    font-size: 1.1rem;
+    color: var(--primary-color);
+    margin-top: 15px;
+}
+
+.download-link {
+    display: none; /* Mặc định ẩn */
+    margin-top: 20px;
+    padding: 12px 25px;
+    background-color: var(--accent-color);
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+    display: inline-flex; /* Đổi thành inline-flex để icon và text nằm cùng hàng */
+    align-items: center;
+    gap: 8px;
+}
+
+.download-link:hover {
+    background-color: #42a5f5;
+}
+
+/* So sánh ảnh */
+.image-compare-row {
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+    margin-top: 30px;
+    flex-wrap: wrap; /* Cho phép xuống dòng trên màn hình nhỏ */
+    display: none; /* Mặc định ẩn */
+}
+
+.image-column {
+    flex: 1;
+    min-width: 280px; /* Kích thước tối thiểu cho cột */
+    text-align: center;
+    background: var(--bg-white);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px var(--shadow-light);
+    border: 1px solid var(--border-color);
+}
+
+.image-column h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+    color: var(--text-dark);
+}
+
+.compare-image {
+    max-width: 100%;
+    height: auto;
+    max-height: 250px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 8px var(--shadow-light);
+}
+
+.stat-box {
+    margin-top: 20px;
+    padding: 15px;
+    background: var(--bg-light);
+    border-radius: 10px;
+    border: 1px dashed var(--primary-light);
+    text-align: left;
+    font-size: 0.9rem;
+}
+
+.stat-box-summary {
+    margin-top: 20px;
+    padding: 20px;
+    background: var(--primary-light); /* Màu nền đậm hơn cho tổng quan */
+    color: white;
+    border-radius: 15px;
+    box-shadow: 0 6px 15px var(--shadow-medium);
+}
+
+.stat-box-summary h4 {
+    margin-top: 0;
+    color: white;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+}
+.stat-box-summary h4 .fas {
+    color: white;
+}
+
+.stat-box-summary p {
+    margin: 8px 0;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.analysis-canvases {
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+    display: none; /* Mặc định ẩn */
+}
+
+.canvas-column {
+    flex: 1;
+    min-width: 280px;
+    text-align: center;
+    background: var(--bg-white);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px var(--shadow-light);
+    border: 1px solid var(--border-color);
+}
+
+.canvas-column canvas {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 2px 5px var(--shadow-light);
+    background-color: white; /* Đảm bảo canvas có nền trắng */
+}
+
+.canvas-column h4 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.15rem;
+    color: var(--text-dark);
+}
+
+.canvas-description {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin-top: 10px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .container {
+        padding: 25px;
+        border-radius: 15px;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    .tabs {
+        flex-direction: column;
+        padding: 5px;
+    }
+
+    .tab-button {
+        margin-bottom: 5px;
+    }
+
+    .tab-content {
+        padding: 20px;
+    }
+
+    .main-button {
+        font-size: 1.1rem;
+        padding: 15px 20px;
+    }
+
+    .image-compare-row,
+    .analysis-canvases {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .image-column,
+    .canvas-column {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+}
+
+.password-input-group {
+    position: relative;
+    width: 100%; /* Đảm bảo nó chiếm đủ không gian */
+}
+
+.password-input-group input[type="text"],
+.password-input-group input[type="password"] {
+    width: calc(100% - 60px); /* Để chừa chỗ cho nút toggle */
+    padding-right: 45px; /* Thêm padding để chữ không bị che bởi nút */
+}
+
+.password-input-group .toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #7f8c8d;
+    font-size: 1.1em;
+    padding: 5px;
+    border-radius: 5px;
+    transition: color 0.2s, background-color 0.2s;
+}
+
+.password-input-group .toggle-password:hover {
+    color: #34495e;
+    background-color: #e0e0e0;
+}
+
+.password-input-group .toggle-password i {
+    pointer-events: none; /* Đảm bảo click vào nút chứ không phải icon */
+}
